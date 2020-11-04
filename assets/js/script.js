@@ -1,3 +1,5 @@
+var taskIdCounter = 0;
+
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do")
 
@@ -36,19 +38,24 @@ var createTaskEl = function(taskDataObj) {
     // it is given the "task-item" class to be styled
     listItemEl.className = "task-item";
 
+    // Add task id as a custom attribute
+    listItemEl.setAttribute("data-task-id", taskIdCounter);
+
     // Create div to hold task info and add to list item
     var taskInfoEl = document.createElement("div");
     // Give it a class name
     taskInfoEl.className = "task-info";
     // Add HTML content to div
     taskInfoEl.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span";
-
     // Add it to the HTML
     listItemEl.appendChild(taskInfoEl);
     
     // and finally it will be added into the HTML
     tasksToDoEl.appendChild(listItemEl);
-}
+
+    // Increase task counter for next unique id
+    taskIdCounter++;
+};
 
 // When the User submits the form to add task, taskFormHandler runs
 // It is listening for the User to hit submit OR hit the enter key
