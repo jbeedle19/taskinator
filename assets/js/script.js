@@ -50,11 +50,63 @@ var createTaskEl = function(taskDataObj) {
     // Add it to the HTML
     listItemEl.appendChild(taskInfoEl);
     
+    var taskActionsEl = createTaskActions(taskIdCounter);
+    listItemEl.appendChild(taskActionsEl);
+
+    tasksToDoEl.appendChild(listItemEl);
+    
     // and finally it will be added into the HTML
     tasksToDoEl.appendChild(listItemEl);
 
     // Increase task counter for next unique id
     taskIdCounter++;
+};
+
+// Function to create working edit and delete buttons
+var createTaskActions = function(taskId) {
+    // Container to hold the buttons in
+    var actionContainerEl = document.createElement("div");
+    actionContainerEl.className = "task-actions";
+
+    // Create Edit button
+    var editButtonEl = document.createElement("button");
+    editButtonEl.textContent = "Edit";
+    editButtonEl.className = "btn edit-btn";
+    editButtonEl.setAttribute("data-task-id", taskId);
+
+    actionContainerEl.appendChild(editButtonEl);
+
+    // Create Delete button
+    var deleteButtonEl = document.createElement("button");
+    deleteButtonEl.textContent = "Delete";
+    deleteButtonEl.className = "btn delete-btn";
+    deleteButtonEl.setAttribute("data-task-id", taskId);
+
+    actionContainerEl.appendChild(deleteButtonEl);
+
+    // Create a dropdown menu to choose Task Type
+    var statusSelectEl = document.createElement("select");
+    statusSelectEl.className = "select-status";
+    statusSelectEl.setAttribute("name", "status-change");
+    statusSelectEl.setAttribute("data-task-id", taskId);
+
+    actionContainerEl.appendChild(statusSelectEl);
+
+    // Create array for <option> elements
+    var statusChoices = ["To Do", "In Progress", "Completed"];
+
+    // For loop to loop through the array of <option> elements
+    for (var i = 0; i < statusChoices.length; i++) {
+        // Create Option Element
+        var statusOptionEl = document.createElement("option");
+        statusOptionEl.textContent = statusChoices[i];
+        statusOptionEl.setAttribute("value", statusChoices[i]);
+
+        // Append to select
+        statusSelectEl.appendChild(statusOptionEl);
+    }
+        
+    return actionContainerEl;
 };
 
 // When the User submits the form to add task, taskFormHandler runs
