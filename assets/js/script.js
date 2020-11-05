@@ -207,13 +207,21 @@ var taskStatusChangeHandler = function(event) {
     }
 };
 
-// Function to drag/drop the tasks
+// Function to drag the tasks
 var dragTaskHandler = function(event) {
     var taskId = event.target.getAttribute("data-task-id");
     event.dataTransfer.setData("text/plain", taskId);
     var getId = event.dataTransfer.getData("text/plain");
     console.log("getId:", getId, typeof getId);
 }
+
+// Function to create Drop Zones for the task
+var dropZoneDragHandler = function(event) {
+    var taskListEl = event.target.closest(".task-list");
+    if (taskListEl) {
+        event.preventDefault();
+    }
+};
 
 // Event Listeners:
 
@@ -226,3 +234,5 @@ pageContentEl.addEventListener("click", taskButtonHandler);
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
 
 pageContentEl.addEventListener("dragstart", dragTaskHandler);
+
+pageContentEl.addEventListener("dragover", dropZoneDragHandler);
