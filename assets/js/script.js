@@ -207,6 +207,16 @@ var taskStatusChangeHandler = function(event) {
     }
 };
 
+// Function to drag/drop the tasks
+var dragTaskHandler = function(event) {
+    var taskId = event.target.getAttribute("data-task-id");
+    event.dataTransfer.setData("text/plain", taskId);
+    var getId = event.dataTransfer.getData("text/plain");
+    console.log("getId:", getId, typeof getId);
+}
+
+// Event Listeners:
+
 // When the User submits the form to add task, taskFormHandler runs
 // It is listening for the User to hit submit OR hit the enter key
 formEl.addEventListener("submit", taskFormHandler);
@@ -215,4 +225,4 @@ pageContentEl.addEventListener("click", taskButtonHandler);
 
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
 
-
+pageContentEl.addEventListener("dragstart", dragTaskHandler);
