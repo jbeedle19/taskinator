@@ -2,10 +2,11 @@ var taskIdCounter = 0;
 
 var pageContentEl = document.querySelector("#page-content");
 var formEl = document.querySelector("#task-form");
-var tasksToDoEl = document.querySelector("#tasks-to-do")
+var tasksToDoEl = document.querySelector("#tasks-to-do");
+var tasksInProgressEl = document.querySelector("#tasks-in-progress");
+var tasksCompletedEl = document.querySelector("#tasks-completed");
 
 var taskFormHandler = function(event) {
-
     // Prevents the page from reloading when form is submitted
     event.preventDefault();
 
@@ -137,9 +138,7 @@ var createTaskActions = function(taskId) {
     return actionContainerEl;
 };
 
-// When the User submits the form to add task, taskFormHandler runs
-// It is listening for the User to hit submit OR hit the enter key
-formEl.addEventListener("submit", taskFormHandler);
+
 
 // Function to decide what happens when either Edit or Delete buttons are clicked
 var taskButtonHandler = function(event) {
@@ -183,6 +182,35 @@ var deleteTask = function(taskId) {
     taskSelected.remove();
 };
 
+// Function to change the status of the task
+var taskStatusChangeHandler = function(event) {
+    // Get the task item's id
+    var taskId = event.target.getAttribute('data-task-id');
+    
+    // Get the currently selected option's value and convert to lowercase
+    var statusValue = event.target.value.toLowerCase();
+
+    // Find the parent task item element based on the id
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+
+    // Conditional statement to decide where the task goes/moves
+    if (statusValue === "to do") {
+        tasksToDoEl.appendChild(taskSelected);
+    }
+    else if (statusValue === "in progress") {
+        tasksInProgressEl.appendChild(taskSelected);
+    }
+    else if (statusValue === "completed") {
+        tasksCompletedEl.appendChild(taskSelected);
+    }
+};
+
+// When the User submits the form to add task, taskFormHandler runs
+// It is listening for the User to hit submit OR hit the enter key
+formEl.addEventListener("submit", taskFormHandler);
+
 pageContentEl.addEventListener("click", taskButtonHandler);
+
+pageContentEl.addEventListener("change", taskStatusChangeHandler);
 
 
