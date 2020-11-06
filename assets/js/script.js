@@ -378,4 +378,5 @@ pageContentEl.addEventListener("drop", dropTaskHandler);
 
 pageContentEl.addEventListener("dragleave", dragLeaveHandler);
 
+// Loads any tasks that were saved to the localStorage on reload
 loadTasks();
