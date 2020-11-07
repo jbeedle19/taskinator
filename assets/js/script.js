@@ -202,18 +202,18 @@ var deleteTask = function(taskId) {
     taskSelected.remove();
 
     // Create new array to hold updated list of tasks
-    var updateTaskArr = [];
+    var updatedTaskArr = [];
 
     // Loop through current tasks
-    for (var i = 0; tasks.length; i++) {
+    for (var i = 0; i < tasks.length; i++) {
         // If tasks[i].id doesn't match the value of taskId, let's keep that task and push it into the new array
         if (tasks[i].id !== parseInt(taskId)) {
-            updateTaskArr.push(tasks[i]);
+            updatedTaskArr.push(tasks[i]);
         }
     }
 
     // Reassign tasks array to be the same as updatedTaskArr
-    tasks = updateTaskArr;
+    tasks = updatedTaskArr;
 
     saveTasks();
 };
@@ -318,10 +318,19 @@ var loadTasks = function() {
     var storedTasks = localStorage.getItem("tasks");
     // Converts tasks from the string format back into an array of objects
     if (storedTasks === null) {
-            tasks = [];
-            return false; 
-        }
+        tasks = [];    
+        return false; 
+    }
+
     tasks = JSON.parse(storedTasks);
+
+    // This is for Code Optimization 4.5.7, but I couldn't get it to work...
+    // Loop through storedTasks array
+    /* for (var i = 0; i < storedTasks.length; i++) {
+        // Pass each task object into the 'createTaskEl()' function
+        createTaskEl(storedTasks[i]);
+        console.log(storedTasks[i]);
+    } */
 
     // Iterates through a tasks array and creates task elements on the page from it
     for (var i = 0; i < tasks.length; i++) {
