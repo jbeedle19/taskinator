@@ -9,7 +9,7 @@ A website to create tasks and track their progress, like an online "To Do" list 
 * JavaScript
 
 ## Website
-www.placeholder.com
+https://jbeedle19.github.io/taskinator/
 
 ## Contribution
 Made with ❤️ by Joshua Beedle
